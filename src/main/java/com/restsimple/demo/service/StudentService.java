@@ -7,8 +7,9 @@ import com.restsimple.demo.entity.Student;
 
 public interface StudentService {
 
-    String createStudent(Student student);
+    Student createStudent(Student student);
     List<Student> getAllStudents();
     Student getStudentById(UUID fromString);
+    public Student updateStudent(Student student);
 
 }

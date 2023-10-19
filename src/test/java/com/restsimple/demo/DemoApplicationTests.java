@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ArrayList;
 
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -53,15 +52,15 @@ class DemoApplicationTests {
 	}
 
 	@Test
-	public void createStudentShould(){
+	public void testSaveStudent(){
 
 		assertNotNull(student);
 		when(studentRepo.save(student)).thenReturn(student);
-		//Student studentOK = studentRepo.save(student);
-		
-		/*String studentSaved = studentService.createStudent(studentOK);
-		System.out.println(studentSaved);
-		assertNotNull(studentSaved);*/
+
+		Student studentCreated = studentServiceImpl.createStudent(student);
+		assertNotNull(studentCreated);
+		assertEquals(studentCreated.getName(), "Rodrigo");
+
 	}
 
 	/**
@@ -90,7 +89,29 @@ class DemoApplicationTests {
 
 	@Test
 	public void testUpdateStudent(){
+		Address address = new Address();
+		address.setStudentId(UUID.fromString("bc048c29-ed2a-43e4-9d01-b5ad63e382f5"));
+		Set<Address> addresses = new HashSet<>();
+		addresses.add(address);
+		Student newStudent = new Student();
+		newStudent.setName("Franco");
+		newStudent.setEmail("franco@correo.cl");
+		newStudent.setAddresses(addresses);
+
+		when(studentRepo.findById(UUID.fromString("bc048c29-ed2a-43e4-9d01-b5ad63e382f5"))).thenReturn(Optional.of(student));
+		Student oneStudent = studentServiceImpl.getStudentById(UUID.fromString("bc048c29-ed2a-43e4-9d01-b5ad63e382f5"));
+		//when(studentRepo.save(student)).thenReturn(student);
+
+		System.out.println(oneStudent.getId());
+		oneStudent.setId(UUID.fromString("bc048c29-ed2a-43e4-9d01-b5ad63e382f5"));
+		oneStudent.setName(newStudent.getName());
+		oneStudent.setEmail(newStudent.getEmail());
 		
+		Student updatedStudent = studentServiceImpl.updateStudent(oneStudent);
+
+		assertNotNull(updatedStudent);
+		assertEquals(updatedStudent.getEmail(), "franco@correo.cl");
+		assertEquals(updatedStudent.getName(), "Franco");
 
 	}
 
