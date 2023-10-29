@@ -7,10 +7,12 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.restsimple.demo.entity.Student;
+import com.restsimple.demo.dto.CreatedStudentDTO;
 import com.restsimple.demo.entity.Address;
 import com.restsimple.demo.exception.StudentNotFoundException;
 import com.restsimple.demo.repository.StudentRepository;
@@ -30,9 +32,9 @@ public class StudentServiceImpl implements StudentService{
     public Student createStudent(Student student){
         student.setToken(jwtUtil.generateStudentToken(student.getEmail()));
         student.setCreated(new Date());
-        student.setLastLogin(new Date());
         student.setModified(new Date());
         return studentRepository.save(student);
+        //return modelMapper.map(savedStudent, CreatedStudentDTO.class);
     }
 
 

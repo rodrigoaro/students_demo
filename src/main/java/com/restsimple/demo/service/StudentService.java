@@ -3,6 +3,7 @@ package com.restsimple.demo.service;
 import java.util.List;
 import java.util.UUID;
 
+import com.restsimple.demo.dto.CreatedStudentDTO;
 import com.restsimple.demo.entity.Student;
 
 public interface StudentService {
