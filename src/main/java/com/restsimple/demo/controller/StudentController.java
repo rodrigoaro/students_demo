@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.restsimple.demo.dto.CreatedStudentDTO;
+import com.restsimple.demo.dto.StudentDTO;
 import com.restsimple.demo.entity.Student;
 import com.restsimple.demo.service.AddressService;
 import com.restsimple.demo.service.StudentService;
@@ -42,9 +43,9 @@ public class StudentController {
     private ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity<CreatedStudentDTO> createStudent(@Valid @RequestBody Student student) throws Exception{
-        Student createdStudent = studentService.createStudent(student);
-        createdStudent.getAddresses().forEach((address) -> address.setStudentId(student.getId()));
+    public ResponseEntity<CreatedStudentDTO> createStudent(@Valid @RequestBody StudentDTO studentDTO) throws Exception{
+        CreatedStudentDTO createdStudent = studentService.createStudent(studentDTO);
+        createdStudent.getAddresses().forEach((address) -> address.setStudentId(createdStudent.getId()));
         createdStudent.getAddresses().stream().forEach((address) -> { addressService.createAddress(address); });
         CreatedStudentDTO createdStudentDTO = modelMapper.map(createdStudent, CreatedStudentDTO.class);
         return new ResponseEntity<CreatedStudentDTO>(createdStudentDTO, HttpStatus.CREATED);
@@ -53,14 +54,14 @@ public class StudentController {
     }
 
     @GetMapping("{idStudent}")
-    public ResponseEntity<Student> getStudentById(@PathVariable("idStudent") UUID studentId) throws Exception{
-        Student student = studentService.getStudentById(studentId);
-        return new ResponseEntity<Student>(student, HttpStatus.OK);
+    public ResponseEntity<CreatedStudentDTO> getStudentById(@PathVariable("idStudent") UUID studentId) throws Exception{
+        CreatedStudentDTO createdStudentDTO = studentService.getStudentById(studentId);
+        return new ResponseEntity<CreatedStudentDTO>(createdStudentDTO, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<Student>> getAllStudents() throws Exception{
-        List<Student> listStudents = studentService.getAllStudents();
+    public ResponseEntity<List<CreatedStudentDTO>> getAllStudents() throws Exception{
+        List<CreatedStudentDTO> listStudents = studentService.getAllStudents();
         return new ResponseEntity<>(listStudents, HttpStatus.OK);
     }
     

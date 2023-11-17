@@ -1,11 +1,20 @@
 package com.restsimple.demo.dto;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
-import lombok.Data;
+import com.restsimple.demo.entity.Address;
 
-@Data
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreatedStudentDTO {
 
     private UUID id;
@@ -14,5 +23,7 @@ public class CreatedStudentDTO {
     private Date created;
     private Date modified;
     private Boolean isActive = true;
+    private List<Address> addresses;
+
        
 }
