@@ -1,12 +1,8 @@
 package com.restsimple.demo;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -18,9 +14,8 @@ import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.restsimple.demo.dto.CreatedStudentDTO;
+import com.restsimple.demo.dto.AddressDTO;
 import com.restsimple.demo.dto.StudentDTO;
-import com.restsimple.demo.entity.Address;
 import com.restsimple.demo.entity.Student;
 import com.restsimple.demo.repository.StudentRepository;
 import com.restsimple.demo.service.impl.StudentServiceImpl;
@@ -53,8 +48,8 @@ class DemoApplicationTests {
 		studentDTO.setEmail("rodrigo@correo.cl");
 		studentDTO.setPassword("12345");
 		studentDTO.setToken("2WDGV3Y8EGFD8434FDJ3849J38H29BUY3BE");	
-		List<Address> addressList = new ArrayList<Address>();
-		Address address = new Address(null, "Av. Siempre Viva", "1223", "11", null);
+		List<AddressDTO> addressList = new ArrayList<AddressDTO>();
+		AddressDTO address = new AddressDTO("Av. Siempre Viva", "1223", "11", null);
 		addressList.add(address);
 		studentDTO.setAddresses(addressList);
 

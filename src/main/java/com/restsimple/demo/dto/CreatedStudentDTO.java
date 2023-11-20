@@ -4,8 +4,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import com.restsimple.demo.entity.Address;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +21,7 @@ public class CreatedStudentDTO {
     private Date created;
     private Date modified;
     private Boolean isActive = true;
-    private List<Address> addresses;
+    private List<AddressDTO> addresses;
 
        
 }

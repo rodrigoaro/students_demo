@@ -1,5 +1,6 @@
 package com.restsimple.demo.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.restsimple.demo.entity.Student;
+import com.restsimple.demo.dto.AddressDTO;
 import com.restsimple.demo.dto.CreatedStudentDTO;
 import com.restsimple.demo.dto.StudentDTO;
 import com.restsimple.demo.entity.Address;
@@ -66,24 +68,25 @@ public class StudentServiceImpl implements StudentService{
     }
 
 
-    /*public CreatedStudentDTO updateStudent(StudentDTO studentDTO) {
+    public CreatedStudentDTO updateStudent(StudentDTO studentDTO) {
         Optional<Student> optStudent = studentRepository.findById(studentDTO.getId());
         if(optStudent.isEmpty()){
-            throw new StudentNotFoundException("El estudiante no se encuentra en la base de datos");
+            throw new StudentNotFoundException("The student is not in our system, please check it.");
         }
 
-        Student studentToUpdate = optStudent.get();
-        studentToUpdate.setName(student.getName());
-        studentToUpdate.setEmail(student.getEmail());
-        studentToUpdate.setPassword(student.getPassword());
-        studentToUpdate.setToken(student.getToken());
-        Set<Address> addresses = new HashSet<>();
-        addresses.addAll(student.getAddresses());
-        addresses.forEach((address) -> address.setStudentId(student.getId()));
+        StudentDTO studentToUpdate = modelMapper.map(optStudent.get(), StudentDTO.class);
+        studentToUpdate.setName(studentDTO.getName());
+        studentToUpdate.setEmail(studentDTO.getEmail());
+        studentToUpdate.setPassword(studentDTO.getPassword());
+        studentToUpdate.setToken(studentDTO.getToken());
+        List<AddressDTO> addresses = new ArrayList<AddressDTO>();
+        addresses.addAll(studentDTO.getAddresses());
+        addresses.forEach((address) -> address.setStudentId(studentDTO.getId()));
         studentToUpdate.setModified(new Date());
 
-        return studentRepository.save(studentToUpdate);
-
-    }*/
+        Student student = modelMapper.map(studentToUpdate, Student.class);
+        Student savedStudent = studentRepository.save(student);
+        return modelMapper.map(savedStudent, CreatedStudentDTO.class);
+    }
     
 }
